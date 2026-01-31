@@ -31,8 +31,10 @@ def mostrar_menu():
     ruta_base = os.path.dirname(__file__)
 
     unidades = {
-        '1': 'Unidad 1',
-        '2': 'Unidad 2'
+        '1': 'Unidad 1 - Introducción a la Programación Orientada a Objetos',
+        '2': 'Unidad 2 - Herencia y Polimorfismo',
+        '3': 'Unidad 3 - Manejo de archivos',
+        '4': 'Unidad 4 - Proyecto Final',
     }
 
     while True:

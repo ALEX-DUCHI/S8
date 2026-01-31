@@ -57,7 +57,9 @@ def mostrar_menu():
 
 def mostrar_sub_menu(ruta_unidad):
     sub_carpetas = [f.name for f in os.scandir(ruta_unidad) if f.is_dir()]
-
+    if not sub_carpetas:
+        print("No hay subcarpetas en esta unidad.")
+        return 
     while True:
         print("\nSubmenú - Selecciona una subcarpeta")
         # Imprime las subcarpetas
@@ -80,7 +82,9 @@ def mostrar_sub_menu(ruta_unidad):
 
 def mostrar_scripts(ruta_sub_carpeta):
     scripts = [f.name for f in os.scandir(ruta_sub_carpeta) if f.is_file() and f.name.endswith('.py')]
-
+    if not scripts:
+        print("No hay scripts en esta subcarpeta.")
+        return
     while True:
         print("\nScripts - Selecciona un script para ver y ejecutar")
         # Imprime los scripts

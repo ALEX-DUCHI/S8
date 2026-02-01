@@ -138,29 +138,46 @@ def mostrar_menu():
         else:
             print("Opción no válida. Por favor, intenta de nuevo.")
             pausar()
-            
+
 def mostrar_sub_menu(ruta_unidad):
-    sub_carpetas = [f.name for f in os.scandir(ruta_unidad) if f.is_dir()]
 
     while True:
-        print("\nSubmenú - Selecciona una subcarpeta")
+        limpiar_pantalla()
+        print("=" * 50)
+        print(f" MENÚ - {os.path.basename(ruta_unidad)}")
+        print("=" * 50)
+        sub_carpetas = [f.name for f in os.scandir(ruta_unidad) if f.is_dir()]
+        if not sub_carpetas:
+            print("\nSubmenú - Selecciona una subcarpeta")
+            pausar()
+            return
+
         # Imprime las subcarpetas
         for i, carpeta in enumerate(sub_carpetas, start=1):
             print(f"{i} - {carpeta}")
-        print("0 - Regresar al menú principal")
+        print("\nR - Refrescar subcarpetas")
+        print("9 - Volver al menú principal")
+        print("0 - volver")
 
-        eleccion_carpeta = input("Elige una subcarpeta o '0' para regresar: ")
-        if eleccion_carpeta == '0':
-            break
+        eleccion = input("\nElige una subcarpeta: ").strip().upper()
+        if eleccion == '0':
+            return  # Regresar al menú principal
+        elif eleccion == '9':
+            return  # Regresar al menú principal
+        elif eleccion == 'R':
+            continue  # Refresca el submenú
         else:
             try:
-                eleccion_carpeta = int(eleccion_carpeta) - 1
-                if 0 <= eleccion_carpeta < len(sub_carpetas):
-                    mostrar_scripts(os.path.join(ruta_unidad, sub_carpetas[eleccion_carpeta]))
+                index = int(eleccion) - 1
+                if 0 <= index < len(sub_carpetas):
+                    ruta_sub = os.path.join(ruta_unidad, sub_carpetas[index])
+                    mostrar_scripts(ruta_sub)
                 else:
                     print("Opción no válida. Por favor, intenta de nuevo.")
+                    pausar()
             except ValueError:
-                print("Opción no válida. Por favor, intenta de nuevo.")
+                print("Debes ingresar un número válido.")
+                pausar()
 
 def mostrar_scripts(ruta_sub_carpeta):
     scripts = [f.name for f in os.scandir(ruta_sub_carpeta) if f.is_file() and f.name.endswith('.py')]

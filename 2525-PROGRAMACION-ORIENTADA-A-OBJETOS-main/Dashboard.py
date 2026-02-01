@@ -180,40 +180,66 @@ def mostrar_sub_menu(ruta_unidad):
                 pausar()
 
 def mostrar_scripts(ruta_sub_carpeta):
-    scripts = [f.name for f in os.scandir(ruta_sub_carpeta) if f.is_file() and f.name.endswith('.py')]
 
     while True:
-        print("\nScripts - Selecciona un script para ver y ejecutar")
-        # Imprime los scripts
+        limpiar_pantalla()
+        print("=" * 50)
+        print(f" SCRIPTS EN: {os.path.basename(ruta_sub_carpeta)}
+        print("=" * 50)
+
+        scripts = [f.name for f in os.scandir(ruta_sub_carpeta)
+                   if f.is_file() and f.name.endswith('.py')]
+        if not scripts:
+            print(" No hay scripts en esta carpeta.")
+            pausar()
+            return
+
         for i, script in enumerate(scripts, start=1):
             print(f"{i} - {script}")
-        print("0 - Regresar al submenú anterior")
+        print("\nS - Buscar script por nombre")
+        print("R - Refrescar lista de scripts")
         print("9 - Regresar al menú principal")
+        print("0 - volver")
 
-        eleccion_script = input("Elige un script, '0' para regresar o '9' para ir al menú principal: ")
-        if eleccion_script == '0':
-            break
-        elif eleccion_script == '9':
+        eleccion = input("\nElige un script: ").strip().upper()
+        if eleccion == '0':
+            return
+        elif eleccion == '9':
             return  # Regresar al menú principal
+        elif eleccion == 'R':
+            continue  # Refresca la lista de scripts
+        elif eleccion == 'B':
+            buscar_scripts(ruta_sub_carpeta)
+            continue
         else:
             try:
-                eleccion_script = int(eleccion_script) - 1
-                if 0 <= eleccion_script < len(scripts):
-                    ruta_script = os.path.join(ruta_sub_carpeta, scripts[eleccion_script])
+                index = int(eleccion) - 1
+                if 0 <= index < len(scripts):
+                    ruta_script = os.path.join(ruta_sub_carpeta, scripts[index])
+                    
+                    limpiar_pantalla()
                     codigo = mostrar_codigo(ruta_script)
                     if codigo:
-                        ejecutar = input("¿Desea ejecutar el script? (1: Sí, 0: No): ")
-                        if ejecutar == '1':
+                        print("\n¿Qué deseas hacer?")
+                        print("1 - Ejecutar el script")
+                        print("2 - Abrir en VSCode")
+                        print("0 - Regresar al menú de scripts")
+
+                        opcion= input("\nElige una opción: ").strip()
+                        if opcion == '1':
                             ejecutar_codigo(ruta_script)
-                        elif ejecutar == '0':
-                            print("No se ejecutó el script.")
+                        elif opcion == '2':
+                            abrir_en_vscode(ruta_script)
                         else:
-                            print("Opción no válida. Regresando al menú de scripts.")
-                        input("\nPresiona Enter para volver al menú de scripts.")
+                            print("Cancelado.")
+                    pausar()
                 else:
                     print("Opción no válida. Por favor, intenta de nuevo.")
+                    pausar()
             except ValueError:
                 print("Opción no válida. Por favor, intenta de nuevo.")
+                pausar()
+            
 
 # Ejecutar el dashboard
 if __name__ == "__main__":

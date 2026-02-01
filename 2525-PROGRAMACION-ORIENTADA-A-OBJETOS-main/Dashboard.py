@@ -79,6 +79,31 @@ def abrir_en_vscode(ruta_script):
     except Exception:
         print(" No se pudo abrir VSCode. Revisa que el comando 'code' funcione.")
 
+def buscar_scripts(ruta_sub_carpeta):
+    scripts = [f.name for f in os.scandir(ruta_sub_carpeta)
+               if f.is_file() and f.name.endswith('.py')]
+
+    if not scripts:
+        print(" No hay scripts en esta carpeta.")
+        pausar()
+        return
+
+    palabra = input("\n🔍 Escribe parte del nombre del script: ").strip().lower()
+    resultados = [s for s in scripts if palabra in s.lower()]
+
+    limpiar_pantalla()
+    print("=" * 50)
+    print(" RESULTADOS DE BÚSQUEDA")
+    print("=" * 50)
+
+    if not resultados:
+        print(" No se encontró ningún script con ese nombre.")
+    else:
+        for i, s in enumerate(resultados, start=1):
+            print(f"{i} - {s}")
+
+    pausar()
+
 
 def mostrar_menu():
     # Define la ruta base donde se encuentra el dashboard.py

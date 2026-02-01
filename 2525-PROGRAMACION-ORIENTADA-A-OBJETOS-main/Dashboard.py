@@ -27,6 +27,20 @@ def registrar_historial(ruta_script):
         "script": ruta_script,
         "fecha": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     })
+def mostrar_historial():
+    limpiar_pantalla()
+    print("=" * 50)
+    print(" HISTORIAL DE EJECUCIONES")
+    print("=" * 50)
+
+    if not HISTORIAL_EJECUCION:
+        print(" Todavía no se ha ejecutado ningún script.")
+    else:
+        for i, item in enumerate(HISTORIAL_EJECUCUCION, start=1):
+            print(f"{i}. {os.path.basename(item['script'])} | {item['fecha']}")
+
+    pausar()
+
 
 
 def mostrar_codigo(ruta_script):

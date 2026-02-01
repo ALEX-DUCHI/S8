@@ -60,15 +60,20 @@ def mostrar_codigo(ruta_script):
     except Exception as e:
         print(f"Error al leer el archivo: {e}")
         return None
+    
+
+
 
 def ejecutar_codigo(ruta_script):
     try:
-        if os.name == 'nt':  # Windows
-            subprocess.Popen(['cmd', '/k', 'python', ruta_script])
-        else:  # Unix-based systems
-            subprocess.Popen(['xterm', '-hold', '-e', 'python3', ruta_script])
+        print(f"\nEjecutando el script...\n")
+        subprocess.run([sys.executable, ruta_script], check=False)
+        registrar_historial(ruta_script)
     except Exception as e:
         print(f"Ocurrió un error al ejecutar el código: {e}")
+
+
+
 
 def mostrar_menu():
     # Define la ruta base donde se encuentra el dashboard.py

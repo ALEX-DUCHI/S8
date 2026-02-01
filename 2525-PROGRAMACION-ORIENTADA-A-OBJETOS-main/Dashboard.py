@@ -36,7 +36,7 @@ def mostrar_historial():
     if not HISTORIAL_EJECUCION:
         print(" Todavía no se ha ejecutado ningún script.")
     else:
-        for i, item in enumerate(HISTORIAL_EJECUCUCION, start=1):
+        for i, item in enumerate(HISTORIAL_EJECUCION, start=1):
             print(f"{i}. {os.path.basename(item['script'])} | {item['fecha']}")
 
     pausar()
@@ -131,7 +131,7 @@ def mostrar_menu():
         elif eleccion_unidad in UNIDADES:
             ruta_unidad = os.path.join(RUTA_BASE, UNIDADES[eleccion_unidad])
             if not validar_ruta(ruta_unidad):
-                print(f" No existe la carpeta: {UNIDADES[eleccion]}")
+                print(f" No existe la carpeta: {UNIDADES[eleccion_unidad]}")
                 pausar()
                 continue
             mostrar_sub_menu(ruta_unidad)
@@ -148,7 +148,7 @@ def mostrar_sub_menu(ruta_unidad):
         print("=" * 50)
         sub_carpetas = [f.name for f in os.scandir(ruta_unidad) if f.is_dir()]
         if not sub_carpetas:
-            print("\nSubmenú - Selecciona una subcarpeta")
+            print("\nNo hay subcarpetas en esta unidad")
             pausar()
             return
 

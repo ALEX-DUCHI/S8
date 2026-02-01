@@ -113,7 +113,7 @@ def mostrar_menu():
         print("=" * 50)
         print(" DASHBOARD - MENÚ PRINCIPAL")
         print("=" * 50)
-        for key in nombre in UNIDADES.items():
+        for key, nombre in UNIDADES.items():
             print(f"{key} - {nombre}")
         print("\nH - Ver historial de ejecuciones")
         print("R - Refrescar menú")
@@ -126,7 +126,7 @@ def mostrar_menu():
         elif eleccion_unidad == 'H':
             mostrar_historial()
 
-        elif eleccion == 'R':
+        elif eleccion_unidad == 'R':
             continue  # Refresca el menú
         elif eleccion_unidad in UNIDADES:
             ruta_unidad = os.path.join(RUTA_BASE, UNIDADES[eleccion_unidad])
@@ -184,7 +184,7 @@ def mostrar_scripts(ruta_sub_carpeta):
     while True:
         limpiar_pantalla()
         print("=" * 50)
-        print(f" SCRIPTS EN: {os.path.basename(ruta_sub_carpeta)}
+        print(f"📜 SCRIPTS EN: {os.path.basename(ruta_sub_carpeta)}")
         print("=" * 50)
 
         scripts = [f.name for f in os.scandir(ruta_sub_carpeta)
@@ -196,7 +196,7 @@ def mostrar_scripts(ruta_sub_carpeta):
 
         for i, script in enumerate(scripts, start=1):
             print(f"{i} - {script}")
-        print("\nS - Buscar script por nombre")
+        print("\nB - Buscar script por nombre")
         print("R - Refrescar lista de scripts")
         print("9 - Regresar al menú principal")
         print("0 - volver")

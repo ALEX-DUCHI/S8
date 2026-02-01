@@ -72,7 +72,12 @@ def ejecutar_codigo(ruta_script):
     except Exception as e:
         print(f"Ocurrió un error al ejecutar el código: {e}")
 
-
+def abrir_en_vscode(ruta_script):
+    try:
+        subprocess.run(["code", ruta_script], check=False)
+        print(" Script abierto en VSCode.")
+    except Exception:
+        print(" No se pudo abrir VSCode. Revisa que el comando 'code' funcione.")
 
 
 def mostrar_menu():

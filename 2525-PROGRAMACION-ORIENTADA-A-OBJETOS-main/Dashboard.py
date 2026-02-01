@@ -9,6 +9,7 @@ UNIDADES = {
 }
 
 RUTA_BASE = os.path.dirname(__file__)
+HISTORIAL_EJECUCION = []
 
 def mostrar_codigo(ruta_script):
     # Asegúrate de que la ruta al script es absoluta

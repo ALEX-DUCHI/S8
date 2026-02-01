@@ -107,29 +107,38 @@ def buscar_scripts(ruta_sub_carpeta):
 
 def mostrar_menu():
     # Define la ruta base donde se encuentra el dashboard.py
-    ruta_base = os.path.dirname(__file__)
-
-    unidades = {
-        '1': 'Unidad 1',
-        '2': 'Unidad 2'
-    }
 
     while True:
-        print("\nMenu Principal - Dashboard")
-        # Imprime las opciones del menú principal
-        for key in unidades:
-            print(f"{key} - {unidades[key]}")
+        limpiar_pantalla()
+        print("=" * 50)
+        print(" DASHBOARD - MENÚ PRINCIPAL")
+        print("=" * 50)
+        for key in nombre in UNIDADES.items():
+            print(f"{key} - {nombre}")
+        print("\nH - Ver historial de ejecuciones")
+        print("R - Refrescar menú")
         print("0 - Salir")
 
-        eleccion_unidad = input("Elige una unidad o '0' para salir: ")
+        eleccion_unidad = input("\nElige una unidad: ").strip().upper()
         if eleccion_unidad == '0':
             print("Saliendo del programa.")
             break
-        elif eleccion_unidad in unidades:
-            mostrar_sub_menu(os.path.join(ruta_base, unidades[eleccion_unidad]))
+        elif eleccion_unidad == 'H':
+            mostrar_historial()
+
+        elif eleccion == 'R':
+            continue  # Refresca el menú
+        elif eleccion_unidad in UNIDADES:
+            ruta_unidad = os.path.join(RUTA_BASE, UNIDADES[eleccion_unidad])
+            if not validar_ruta(ruta_unidad):
+                print(f" No existe la carpeta: {UNIDADES[eleccion]}")
+                pausar()
+                continue
+            mostrar_sub_menu(ruta_unidad)
         else:
             print("Opción no válida. Por favor, intenta de nuevo.")
-
+            pausar()
+            
 def mostrar_sub_menu(ruta_unidad):
     sub_carpetas = [f.name for f in os.scandir(ruta_unidad) if f.is_dir()]
 

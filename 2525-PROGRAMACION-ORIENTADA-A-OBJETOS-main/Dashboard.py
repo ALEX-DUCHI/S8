@@ -241,7 +241,7 @@ def mostrar_scripts(ruta_sub_carpeta):
                 pausar()
             
 
-# Ejecutar el dashboard
+# Ejecutar el dashboard.
 if __name__ == "__main__":
     mostrar_menu()
 

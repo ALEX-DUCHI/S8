@@ -22,6 +22,12 @@ def pausar():
 def validar_ruta(ruta):
     return os.path.exists(ruta)
 
+def registrar_historial(ruta_script):
+    HISTORIAL_EJECUCION.append({
+        "script": ruta_script,
+        "fecha": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    })
+
 
 def mostrar_codigo(ruta_script):
     # Asegúrate de que la ruta al script es absoluta

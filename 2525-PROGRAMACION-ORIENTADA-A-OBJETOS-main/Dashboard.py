@@ -31,16 +31,12 @@ def mostrar_menu():
     ruta_base = os.path.dirname(__file__)
 
     unidades = {
-        '1': 'Unidad 1 - Introducción a la Programación Orientada a Objetos',
-        '2': 'Unidad 2 - Herencia y Polimorfismo',
-        '3': 'Unidad 3 - Manejo de archivos',
-        '4': 'Unidad 4 - Proyecto Final',
+        '1': 'Unidad 1',
+        '2': 'Unidad 2'
     }
 
     while True:
-        print("\n" + "="*40)
         print("\nMenu Principal - Dashboard")
-        print("="*40)
         # Imprime las opciones del menú principal
         for key in unidades:
             print(f"{key} - {unidades[key]}")
@@ -57,9 +53,7 @@ def mostrar_menu():
 
 def mostrar_sub_menu(ruta_unidad):
     sub_carpetas = [f.name for f in os.scandir(ruta_unidad) if f.is_dir()]
-    if not sub_carpetas:
-        print("No hay subcarpetas en esta unidad.")
-        return 
+
     while True:
         print("\nSubmenú - Selecciona una subcarpeta")
         # Imprime las subcarpetas
@@ -82,77 +76,39 @@ def mostrar_sub_menu(ruta_unidad):
 
 def mostrar_scripts(ruta_sub_carpeta):
     scripts = [f.name for f in os.scandir(ruta_sub_carpeta) if f.is_file() and f.name.endswith('.py')]
-    if not scripts:
-        print("No hay scripts en esta subcarpeta.")
-        return
-    while True:
-        print("\nSubmenú - Selecciona un script para ver y ejecutar")
-        # Imprime los scripts
-        for i, carpeta in enumerate(scripts, start=1):
-            print(f"{i} - {carpeta}")
-        print("0 - Regresar al menu principal")
 
-        eleccion_carpeta = input("Elige un subcarpeta, '0' para regresar: ")
-        if eleccion_carpeta == '0':
+    while True:
+        print("\nScripts - Selecciona un script para ver y ejecutar")
+        # Imprime los scripts
+        for i, script in enumerate(scripts, start=1):
+            print(f"{i} - {script}")
+        print("0 - Regresar al submenú anterior")
+        print("9 - Regresar al menú principal")
+
+        eleccion_script = input("Elige un script, '0' para regresar o '9' para ir al menú principal: ")
+        if eleccion_script == '0':
             break
         elif eleccion_script == '9':
             return  # Regresar al menú principal
         else:
             try:
-                eleccion_carpeta = int(eleccion_carpeta) - 1
-                if 0 <= eleccion_carpeta < len(sub_carpetas):
-                    mostrar_scripts(os.path.join(ruta_unidad, sub_carpetas[eleccion_carpeta]))
+                eleccion_script = int(eleccion_script) - 1
+                if 0 <= eleccion_script < len(scripts):
+                    ruta_script = os.path.join(ruta_sub_carpeta, scripts[eleccion_script])
+                    codigo = mostrar_codigo(ruta_script)
+                    if codigo:
+                        ejecutar = input("¿Desea ejecutar el script? (1: Sí, 0: No): ")
+                        if ejecutar == '1':
+                            ejecutar_codigo(ruta_script)
+                        elif ejecutar == '0':
+                            print("No se ejecutó el script.")
+                        else:
+                            print("Opción no válida. Regresando al menú de scripts.")
+                        input("\nPresiona Enter para volver al menú de scripts.")
                 else:
                     print("Opción no válida. Por favor, intenta de nuevo.")
             except ValueError:
                 print("Opción no válida. Por favor, intenta de nuevo.")
-                  
-    def mostrar_scripts(ruta_sub_carpeta):
-        scripts = [f.name for f in os.scandir(ruta_sub_carpeta) if f.is_file() and f.name.endswith('.py')]
-        if not scripts:
-            print("No hay scripts en esta subcarpeta.")
-            return
-        while True:
-            print("\nScripts - Selecciona un script para ver y ejecutar")          
-            for i, script in enumerate(scripts, start=1):
-                print(f"{i} - {script}")
-            print("0 - Regresar al submenú anterior")
-            print("9 - Regresar al menú principal")
-            print("B - Buscar un script por nombre")
-
-            eleccion_script = input("Elige un script, '0' para regresar, '9' o 'B': ")
-            if eleccion_script == '0':
-                break
-            elif eleccion_script == '9':
-                return  # Regresar al menú principal
-            elif eleccion_script.lower() == 'b':
-                nombre_buscar = input("Ingresa parte del nombre del script: ")
-                encontrados = [s for s in scripts if nombre_buscar.lower() in s.lower()]
-                if encontrados:
-                    print("\nScripts encontrados:")
-                    for s in encontrados:
-                        print(f"- {s}")
-                else:
-                    print("No se encontraron scripts con ese nombre.")
-            else:
-                try:
-                    eleccion_script = int(eleccion_script) - 1
-                    if 0 <= eleccion_script < len(scripts):
-                        ruta_script = os.path.join(ruta_sub_carpeta, scripts[eleccion_script])
-                        codigo = mostrar_codigo(ruta_script)
-                        if codigo:
-                            ejecutar = input("¿Desea ejecutar el script? (1: Sí, 0: No): ")
-                            if ejecutar == '1':
-                                ejecutar_codigo(ruta_script)
-                            elif ejecutar == '0':
-                                print("No se ejecutó el script.")
-                            else:
-                                print("Opción no válida. Regresando al menú de scripts.")
-                            input("\nPresiona Enter para volver al menú de scripts.")
-                    else:
-                        print("Opción no válida. Por favor, intenta de nuevo.")
-                except ValueError:
-                    print("Opción no válida. Por favor, intenta de nuevo.")
 
 # Ejecutar el dashboard
 if __name__ == "__main__":

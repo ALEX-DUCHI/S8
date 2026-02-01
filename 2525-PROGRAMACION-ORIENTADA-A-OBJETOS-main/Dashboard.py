@@ -3,6 +3,11 @@ import subprocess
 import sys
 from datetime import datetime
 
+UNIDADES = {
+    '1': 'Unidad 1',
+    '2': 'Unidad 2',
+}
+
 
 def mostrar_codigo(ruta_script):
     # Asegúrate de que la ruta al script es absoluta

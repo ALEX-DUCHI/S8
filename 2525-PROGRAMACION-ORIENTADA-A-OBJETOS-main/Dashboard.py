@@ -11,6 +11,18 @@ UNIDADES = {
 RUTA_BASE = os.path.dirname(__file__)
 HISTORIAL_EJECUCION = []
 
+def limpiar_pantalla():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
+def pausar():
+    input("\nPresiona Enter para continuar...")
+
+
+def validar_ruta(ruta):
+    return os.path.exists(ruta)
+
+
 def mostrar_codigo(ruta_script):
     # Asegúrate de que la ruta al script es absoluta
     ruta_script_absoluta = os.path.abspath(ruta_script)
